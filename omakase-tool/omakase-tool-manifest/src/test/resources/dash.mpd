@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MPD 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="urn:mpeg:dash:schema:mpd:2011" 
+xmlns:yt="http://youtube.com/yt/2012/10/10" 
+xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd" 
+profiles="urn:mpeg:dash:profile:isoff-on-demand:2011" type="static" minBufferTime="PT1.500S" mediaPresentationDuration="PT135.743S">
+<BaseURL>test</BaseURL>
+	<Period>
+		<AdaptationSet mimeType="audio/webm" subsegmentAlignment="true">
+			<Representation id="171" codecs="vorbis" audioSamplingRate="44100" startWithSAP="1" bandwidth="129553">
+				<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+				<BaseURL>feelings_vp9-20130806-171.webm</BaseURL>
+				<SegmentBase indexRange="4452-4686" indexRangeExact="true">
+					<Initialization sourceURL="a.mp4" />
+				</SegmentBase>
+			</Representation>
+			<Representation id="172" codecs="vorbis" audioSamplingRate="44100" startWithSAP="1" bandwidth="188041">
+				<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+				<BaseURL>feelings_vp9-20130806-172.webm</BaseURL>
+				<SegmentBase indexRange="3995-4229" indexRangeExact="true">
+					<Initialization sourceURL="b.mp4" />
+					<RepresentationIndex sourceURL="1.idx" />
+				</SegmentBase>
+			</Representation>
+		</AdaptationSet>
+		<AdaptationSet mimeType="video/webm" subsegmentAlignment="true">
+		    <BaseURL>test2</BaseURL>
+		    <SegmentBase indexRange="3995-4229" indexRangeExact="true">
+        	    <Initialization sourceURL="hello.mp4" />
+        		<RepresentationIndex sourceURL="2.idx" />
+        	</SegmentBase>
+			<Representation id="242" codecs="vp9" width="426" height="240" startWithSAP="1" bandwidth="490208">
+				<BaseURL>feelings_vp9-20130806-242.webm</BaseURL>
+			</Representation>
+			<Representation id="243" codecs="vp9" width="640" height="360" startWithSAP="1" bandwidth="927221">
+				<BaseURL>feelings_vp9-20130806-243.webm</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+</MPD>

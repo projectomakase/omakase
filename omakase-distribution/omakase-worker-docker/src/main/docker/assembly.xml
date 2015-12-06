@@ -1,0 +1,23 @@
+<assembly>
+    <id>omakase-worker</id>
+    <files>
+        <file>
+            <source>target/staging/logging.properties</source>
+            <outputDirectory>omakase-worker</outputDirectory>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <directory>target/staging/lib</directory>
+            <outputDirectory>omakase-worker/lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target/staging/bin</directory>
+            <outputDirectory>omakase-worker/bin</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target/staging/jolokia</directory>
+            <outputDirectory>omakase-worker/jolokia</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

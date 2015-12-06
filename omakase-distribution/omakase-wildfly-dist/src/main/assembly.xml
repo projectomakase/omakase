@@ -1,0 +1,41 @@
+<assembly>
+    <id>wildfly-dist</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <baseDirectory>/</baseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/main/dist/modules</directory>
+            <outputDirectory>modules</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/dist/standalone</directory>
+            <outputDirectory>standalone</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/dist/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+        </fileSet>
+    </fileSets>
+
+    <files>
+        <file>
+            <source>../../omakase/target/omakase-${project.version}.war</source>
+            <outputDirectory>standalone/deployments</outputDirectory>
+        </file>
+    </files>
+
+    <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>modules/org/infinispan/core/ispn-7.2</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.infinispan:infinispan-core:jar</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+</assembly>

@@ -1,0 +1,18 @@
+<assembly>
+    <id>omakase</id>
+    <fileSets>
+        <fileSet>
+            <directory>target/staging/modules</directory>
+            <outputDirectory>wildfly/modules</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target/staging/standalone</directory>
+            <outputDirectory>wildfly/standalone</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target/staging/bin</directory>
+            <outputDirectory>wildfly/bin</outputDirectory>
+        </fileSet>
+    </fileSets>
+
+</assembly>

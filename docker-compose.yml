@@ -1,0 +1,37 @@
+mysql:
+  image: projectomakase/mysql
+  ports:
+    - "3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_DATABASE: omakase
+    MYSQL_USER: omakase
+    MYSQL_PASSWORD: omakase
+activemq:
+  image: projectomakase/activemq
+  ports:
+    - "8161"
+omakase:
+  image: projectomakase/omakase
+  ports:
+    - "8080"
+    - "9990"
+  links:
+    - mysql:mysql
+    - activemq:activemq
+  environment:
+    ADMIN_USER: admin
+    ADMIN_PASSWORD: password
+    OMAKASE_CONFIG: default
+    OMAKASE_DB_ADDRESS: mysql
+    OMAKASE_ACTIVEMQ_ADDRESS: activemq
+worker:
+  image: projectomakase/omakase-worker
+  ports:
+    - "8778"
+  links:
+    - omakase:omakase
+  volumes:
+    - ~:/data
+    - /opt/omakase/repositories
+  command: /opt/omakase-worker/bin/worker.sh -h omakase -d 45

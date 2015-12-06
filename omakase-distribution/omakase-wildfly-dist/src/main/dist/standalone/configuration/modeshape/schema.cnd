@@ -1,0 +1,190 @@
+<jcr='http://www.jcp.org/jcr/1.0'>
+<nt='http://www.jcp.org/jcr/nt/1.0'>
+<mix='http://www.jcp.org/jcr/mix/1.0'>
+
+<omakase='http://projectomakase.org/omakase/1.0'>
+
+[omakase:stock] > mix:created, mix:lastModified mixin
+  - omakase:name (string)
+  - omakase:externalIds (string) multiple
+
+// Content
+
+[omakase:asset] > omakase:stock mixin
+
+[omakase:variant] > omakase:stock mixin
+  - omakase:type (string) mandatory < 'FILE', 'HLS_MANIFEST', 'DASH_MANIFEST', 'SMOOTH_MANIFEST'
+
+[omakase:variantRepository] > mix:created, mix:lastModified mixin
+  - omakase:repositoryName (string)
+  - omakase:repositoryType (string) mandatory
+
+[omakase:variantFile] mixin
+  - omakase:name (string)
+  - omakase:originalFilename (string)
+  - omakase:originalFilePath (string)
+  - omakase:fileSize (long)
+  - omakase:fileCreated (date) mandatory
+  - omakase:type (string) mandatory < 'FILE', 'VIRTUAL', 'CHILD'
+
+[omakase:fileHash] > mix:created, mix:lastModified mixin
+  - omakase:hash (string) mandatory
+  - omakase:hashAlgorithm (string) mandatory
+
+// Repositories
+
+[omakase:repository] > mix:created, mix:lastModified mixin
+  - omakase:name (string)
+  - omakase:description (string)
+  - omakase:type (string) mandatory
+
+[omakase:repositoryFile] > mix:created, mix:lastModified mixin
+  - omakase:relativePath (string)
+  - omakase:variantId (string) mandatory
+  - omakase:variantFileId (string)
+
+[omakase:repositoryFileConfiguration] mixin
+  - omakase:root (string) mandatory
+
+[omakase:repositoryFtpConfiguration] mixin
+  - omakase:address (string) mandatory
+  - omakase:port (long) mandatory
+  - omakase:username (string) mandatory
+  - omakase:password (string) mandatory
+  - omakase:root (string) mandatory
+  - omakase:passive (boolean)
+
+[omakase:repositorySftpConfiguration] mixin
+  - omakase:address (string) mandatory
+  - omakase:port (long) mandatory
+  - omakase:username (string) mandatory
+  - omakase:password (string) mandatory
+  - omakase:root (string) mandatory
+
+[omakase:repositoryS3Configuration] mixin
+  - omakase:awsAccessKey (string) mandatory
+  - omakase:awsSecretKey (string) mandatory
+  - omakase:region (string) mandatory
+  - omakase:bucket (string) mandatory
+  - omakase:root (string)
+
+[omakase:repositoryGlacierConfiguration] mixin
+  - omakase:awsAccessKey (string) mandatory
+  - omakase:awsSecretKey (string) mandatory
+  - omakase:region (string) mandatory
+  - omakase:vault (string) mandatory
+  - omakase:snsTopicArn (string) mandatory
+
+  // Locations
+
+[omakase:location] > mix:created, mix:lastModified mixin
+  - omakase:name (string)
+  - omakase:description (string)
+  - omakase:type (string) mandatory
+
+[omakase:locationFileConfiguration] mixin
+  - omakase:root (string) mandatory
+
+[omakase:locationNetConfiguration] mixin
+  - omakase:address (string) mandatory
+  - omakase:port (long) mandatory
+  - omakase:root (string)
+  - omakase:username (string)
+  - omakase:password (string)
+
+[omakase:locationFtpConfiguration] mixin
+  - omakase:address (string) mandatory
+  - omakase:port (long) mandatory
+  - omakase:root (string)
+  - omakase:username (string)
+  - omakase:password (string)
+  - omakase:passive (boolean)
+
+[omakase:locationS3Configuration] mixin
+  - omakase:awsAccessKey (string) mandatory
+  - omakase:awsSecretKey (string) mandatory
+  - omakase:region (string) mandatory
+  - omakase:bucket (string) mandatory
+  - omakase:root (string)
+
+// Jobs
+
+[omakase:job] > omakase:stock mixin
+  - omakase:type (string)  mandatory < 'INGEST', 'EXPORT', 'REPLICATION', 'TRANSFORMATION', 'DELETE'
+  - omakase:status (string) mandatory < 'UNSUBMITTED', 'QUEUED', 'EXECUTING', 'COMPLETED', 'FAILED', CANCELED
+  - omakase:statusTimestamp (date) mandatory
+  - omakase:priority (long) mandatory
+  - omakase:system (boolean) mandatory
+
+[omakase:jobConfiguration] mixin
+
+[omakase:ingestConfiguration] > omakase:jobConfiguration mixin
+  - omakase:variant (string) mandatory
+  - omakase:repositories (string) multiple mandatory
+  - omakase:deleteSource (boolean)
+
+[omakase:ingestFile] mixin
+  - omakase:uri (string) mandatory
+  - omakase:size (long)
+  - omakase:hash (string)
+  - omakase:hashAlgorithm (string)
+  - omakase:sourceRepositoryFileId (string)
+
+[omakase:exportConfiguration] > omakase:jobConfiguration mixin
+  - omakase:variant (string) mandatory
+  - omakase:repositories (string) multiple mandatory
+  - omakase:validation (boolean)
+  - omakase:locations (string) multiple mandatory
+
+[omakase:replicationConfiguration] > omakase:jobConfiguration mixin
+  - omakase:variant (string) mandatory
+  - omakase:sourceRepositories (string) multiple mandatory
+  - omakase:destinationRepositories (string) multiple mandatory
+
+[omakase:deleteVariantConfiguration] > omakase:jobConfiguration mixin
+    - omakase:variant (string) mandatory
+    - omakase:repositories (string) multiple mandatory
+
+// Pipeline
+
+[omakase:pipeline] > mix:created, mix:lastModified mixin
+  - omakase:objectId (string) mandatory
+  - omakase:object (string) mandatory
+  - omakase:status (string) mandatory < 'QUEUED', 'EXECUTING', 'COMPLETED', 'FAILED'
+  - omakase:statusOfCurrentStage (string) mandatory < 'QUEUED', 'EXECUTING', 'COMPLETED', 'FAILED'
+  - omakase:currentStage (string) mandatory
+  - omakase:stages (string) multiple mandatory
+  - omakase:failureStage (string)
+  - omakase:callbackListenerId (string)
+
+// Tasks
+
+[omakase:taskGroup] > mix:created, mix:lastModified mixin
+  - omakase:status (string) mandatory < 'QUEUED', 'EXECUTING', 'COMPLETED', 'CANCELED', 'FAILED_DIRTY', 'FAILED_CLEAN'
+  - omakase:statusTimestamp (date) mandatory
+  - omakase:jobId (string) mandatory
+  - omakase:pipelineId (string) mandatory
+  - omakase:callbackListenerId (string) mandatory
+
+[omakase:task] > mix:created, mix:lastModified mixin
+  - omakase:type (string) mandatory
+  - omakase:description (string) mandatory
+  - omakase:status (string) mandatory < 'QUEUED', 'EXECUTING', 'COMPLETED', 'CANCELED', 'FAILED_DIRTY', 'FAILED_CLEAN'
+  - omakase:statusTimestamp (date) mandatory
+  - omakase:priority (long) mandatory
+  - omakase:retryAttempts (long) mandatory
+  - omakase:configuration (string)
+  - omakase:output (string)
+
+// Workers
+
+[omakase:worker] > omakase:stock mixin
+  - omakase:status (string) mandatory < 'STARTING', 'ACTIVE', 'STOPPING'
+  - omakase:statusTimestamp (date) mandatory
+  - omakase:tasks (string) multiple
+
+// Messages
+
+[omakase:message] > mix:created mixin
+  - omakase:messageValue (string) mandatory
+  - omakase:messageType (string) mandatory < 'INFO', 'ERROR'

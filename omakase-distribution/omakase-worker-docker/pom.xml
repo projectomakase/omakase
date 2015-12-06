@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>omakase-distribution</artifactId>
+        <groupId>org.projectomakase.omakase</groupId>
+        <version>1.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>omakase-worker-docker</artifactId>
+
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>stage</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/staging</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.projectomakase.omakase</groupId>
+                                    <artifactId>omakase-worker-dist</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>worker-dist</classifier>
+                                    <overWrite>true</overWrite>
+                                    <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jolokia</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <images>
+                        <image>
+                            <name>projectomakase/omakase-worker:${docker.tag}</name>
+                            <alias>omakase-worker</alias>
+                            <build>
+                                <from>projectomakase/server-jre-8</from>
+                                <maintainer>Richard Lucas &lt;feedback@projectomakase.org&gt;</maintainer>
+                                <ports>
+                                    <port>8778</port>
+                                </ports>
+                                <cmd>
+                                    <shell>/opt/omakase-worker/bin/worker.sh</shell>
+                                </cmd>
+                                <assembly>
+                                    <mode>dir</mode>
+                                    <basedir>/opt</basedir>
+                                    <user>omakase:omakase:root</user>
+                                    <descriptor>assembly.xml</descriptor>
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

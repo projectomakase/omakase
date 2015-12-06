@@ -1,0 +1,21 @@
+<jboss-deployment-structure>
+    <deployment>
+        <exclusions>
+            <module name="org.joda.time"/>
+        </exclusions>
+        <dependencies>
+            <module name="javax.jcr"/>
+            <module name="org.modeshape.jcr.api" services="import"/>
+            <module name="org.modeshape" services="import">
+                <imports>
+                    <exclude path="org/joda/time/**" />
+                </imports>
+            </module>
+            <module name="com.fasterxml.jackson.core.jackson-core"/>
+            <module name="com.fasterxml.jackson.core.jackson-databind"/>
+            <module name="com.fasterxml.jackson.core.jackson-annotations"/>
+            <module name="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider"/>
+            <module name="org.apache.commons.logging"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

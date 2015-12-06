@@ -1,0 +1,3848 @@
+{
+  "basePath": "/omakase/api",
+  "swagger": "2.0",
+  "info": {
+    "title": "Omakase",
+    "version": "1.0"
+  },
+  "tags": [
+    {
+      "name": "assets",
+      "description": "Asset, Variant and File Operations"
+    },
+    {
+      "name": "jobs",
+      "description": "Job management"
+    },
+    {
+      "name": "repositories",
+      "description": "Repository management"
+    },
+    {
+      "name": "locations",
+      "description": "Location management"
+    },
+    {
+      "name": "broker",
+      "description": "Omakase broker"
+    },
+    {
+      "name": "status",
+      "description": "Track the status of long running asynchronous requests"
+    },
+    {
+      "name": "version",
+      "description": "Returns the application's version"
+    }
+  ],
+  "paths": {
+    "/assets": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getAssets",
+        "summary": "Retrieve a listing of assets",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AssetsEnvelope"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "createAsset",
+        "summary": "Create a new asset",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostAsset"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getAssetById",
+        "summary": "Retrieve an asset",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetAsset"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "deleteAsset",
+        "summary": "Delete an asset",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "updateAsset",
+        "summary": "Updates an asset",
+        "description": "Only name and external id are updated all other fields are read only.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetAsset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "partialUpdateAsset",
+        "summary": "Partially updates an asset",
+        "description": "Supports updating the asset name and adding and removing external ids using JSON Patch.",
+        "consumes": [
+          "application/json-patch+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JSON Patch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getAssetVariants",
+        "summary": "Retrieve the asset's variants",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VariantsEnvelope"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "createAssetVariant",
+        "summary": "Create a new variant for the given asset",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostVariant"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getAssetVariant",
+        "summary": "Retrieve an asset's variant",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetVariant"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "deleteAssetVariant",
+        "summary": "Delete an asset's variant",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "updateAssetVariant",
+        "summary": "Update an asset's variant",
+        "description": "Only name and external id are updated all other fields are read only.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetVariant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "partialUpdateAssetVariant",
+        "summary": "Partially update an asset's variant",
+        "description": "Supports updating the asset name and adding and removing external ids using JSON Patch.",
+        "consumes": [
+          "application/json-patch+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JSON Patch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}/repositories": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getRepositories",
+        "summary": "Retrieve the repositories the variant is stored in",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VariantRepositoriesEnvelope"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}/repositories/{repositoryId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getRepository",
+        "summary": "Retrieves a variant's repository",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetVariantRepository"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "deleteVariantFromRepository",
+        "summary": "Deletes a variant from a repository",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}/repositories/{repositoryId}/status": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getRepositoryStatus",
+        "summary": "Retrieves a variant's repository status",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VariantRepositoryStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}/files": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getFiles",
+        "summary": "Retrieve the variant's files",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FilesEnvelope"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/assets/{assetId}/variants/{variantId}/files/{fileId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets"
+        ],
+        "operationId": "getFiles",
+        "summary": "Retrieves a variant's file",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Asset Id",
+            "name": "assetId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "Variant Id",
+            "name": "variantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "description": "File Id",
+            "name": "fileId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getJobs",
+        "summary": "Retrieve a listing of jobs",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/JobsEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "createJob",
+        "summary": "Create a new job",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostJob"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getJobById",
+        "summary": "Retrieve a job",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetJob"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "deleteJob",
+        "summary": "Delete a job",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "updateJob",
+        "summary": "Updates a job",
+        "description": "Only name, external ids and priority are updated all other fields are read only.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetJob"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "patchJob",
+        "summary": "Partially updates a job",
+        "description": "Supports updating the asset name, adding and removing external ids and changing the priority using JSON Patch.",
+        "consumes": [
+          "application/json-patch+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/JSON Patch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/configuration": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getJobConfiguration",
+        "summary": "Retrieve a job's configuration",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/JobConfiguration"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "updateJobConfiguration",
+        "summary": "Update a job's configuration",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/JobConfiguration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/status": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getJobStatus",
+        "summary": "Retrieve a job's status",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CurrentJobStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "updateJobStatus",
+        "summary": "Update a job's status",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CurrentJobStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/messages": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getJobMessages",
+        "summary": "Retrieve a listing of job messages",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Job Id",
+            "name": "jobId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "timestamp"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MessagesEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/repositories": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "getRepositories",
+        "summary": "Retrieve a listing of repositories",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RepositoriesEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "createRepository",
+        "summary": "Create a repository",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PostRepository"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/repositories/{repositoryId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "getRepository",
+        "summary": "Retrieve a repository",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetRepository"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "deleteRepository",
+        "summary": "Delete a repository",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/repositories/{repositoryId}/configuration": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "getRepositoryConfiguration",
+        "summary": "Retrieve a repository configuration",
+        "description": "Returns a payload containing multiple key/value pairs",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RepositoryConfiguration"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "updateRepositoryConfiguration",
+        "summary": "Update a repository configuration",
+        "description": "Accepts a payload containing multiple key/value pairs",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Repository Id",
+            "name": "repositoryId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/RepositoryConfiguration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/repositories/templates": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "getRepositoryTemplates",
+        "summary": "Retrieve a listing of repository templates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Template"
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/repositories/templates/{type}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repositories"
+        ],
+        "operationId": "getRepositoryTemplate",
+        "summary": "Retrieve a repository template",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Template Type",
+            "name": "type",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Template"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "getLocations",
+        "summary": "Retrieve a listing of locations",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LocationsEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "createLocation",
+        "summary": "Create a location",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/PostLocation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locations/{locationId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "getLocation",
+        "summary": "Retrieve a location",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Location Id",
+            "name": "locationId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetLocation"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "deleteLocation",
+        "summary": "Delete a location",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Location Id",
+            "name": "locationId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locations/{locationId}/configuration": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "getLocationConfiguration",
+        "summary": "Retrieve a location configuration",
+        "description": "Returns a payload containing multiple key/value pairs",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Location Id",
+            "name": "locationId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LocationConfiguration"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "updateLocationConfiguration",
+        "summary": "Update a location configuration",
+        "description": "Accepts a payload containing multiple key/value pairs",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Location Id",
+            "name": "locationId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/LocationConfiguration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locations/templates": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "getLocationTemplates",
+        "summary": "Retrieve a listing of location templates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Template"
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locations/templates/{type}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "locations"
+        ],
+        "operationId": "getLocationTemplate",
+        "summary": "Retrieve a location template",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Template Type",
+            "name": "type",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Template"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/broker/workers": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "getWorkers",
+        "summary": "Retrieve a listing of workers",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "created"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WorkersEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "registerWorker",
+        "summary": "Register a new worker",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostWorker"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/broker/workers/{workerId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "getWorkerById",
+        "summary": "Retrieve a worker",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Worker Id",
+            "name": "workerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetWorker"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "unregisterWorker",
+        "summary": "Unregister a worker",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Worker Id",
+            "name": "workerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "updateWorker",
+        "summary": "Updates a Worker",
+        "description": "Only name, external id and status are updated all other fields are read only.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Worker Id",
+            "name": "workerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetWorker"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/broker/workers/{workerId}/messages": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "broker"
+        ],
+        "operationId": "getWorkerMessages",
+        "summary": "Retrieve a listing of worker messages",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Worker Id",
+            "name": "workerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The page of results to return",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "description": "The number of results per page",
+            "name": "per_page",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          },
+          {
+            "in": "query",
+            "description": "Determines the attribute used to sort the results",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "default": "timestamp"
+          },
+          {
+            "in": "query",
+            "description": "Determines the sort order of the results",
+            "name": "order",
+            "required": false,
+            "type": "string",
+            "default": "DESC"
+          },
+          {
+            "in": "query",
+            "description": "Limits the results to an aggregate, pagination is ignored.",
+            "name": "only_count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MessagesEnvelope"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/status/{statusId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "status"
+        ],
+        "operationId": "getStatus",
+        "summary": "Retrieves a status",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "Status Id",
+            "name": "statusId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "version"
+        ],
+        "operationId": "getVersion",
+        "summary": "Get the application version",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Version"
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ResponseStatus": {
+      "required": [
+        "status",
+        "links"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "OK",
+            "ERROR"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "exception": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/ResponseStatusLinks"
+        }
+      }
+    },
+    "ResponseStatusLinks": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "Envelope": {
+      "required": [
+        "total_count",
+        "data"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "per_page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total_pages": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "total_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "links": {
+          "$ref": "#/definitions/PaginationLinks"
+        }
+      }
+    },
+    "PaginationLinks": {
+      "properties": {
+        "first": {
+          "$ref": "#/definitions/Href"
+        },
+        "last": {
+          "$ref": "#/definitions/Href"
+        },
+        "prev": {
+          "$ref": "#/definitions/Href"
+        },
+        "next": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "Href": {
+      "required": [
+        "href"
+      ],
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "Template": {
+      "required": [
+        "type, properties"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TemplateProperty"
+          }
+        }
+      }
+    },
+    "TemplateProperty": {
+      "required": [
+        "name, type",
+        "required",
+        "read_only",
+        "multi_values"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "read_only": {
+          "type": "boolean"
+        },
+        "multi_values": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AssetsEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetAsset"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetAsset": {
+      "required": [
+        "id",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/AssetLinks"
+        }
+      }
+    },
+    "AssetLinks": {
+      "required": [
+        "self",
+        "related",
+        "parent",
+        "children",
+        "variants",
+        "metadata"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "related": {
+          "$ref": "#/definitions/Href"
+        },
+        "parent": {
+          "$ref": "#/definitions/Href"
+        },
+        "children": {
+          "$ref": "#/definitions/Href"
+        },
+        "variants": {
+          "$ref": "#/definitions/Href"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostAsset": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "VariantsEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetVariant"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetVariant": {
+      "required": [
+        "id",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/VariantLinks"
+        }
+      }
+    },
+    "VariantLinks": {
+      "required": [
+        "self",
+        "metadata",
+        "repositories",
+        "files"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "repositories": {
+          "$ref": "#/definitions/Href"
+        },
+        "files": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostVariant": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "VariantRepositoriesEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetVariantRepository"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetVariantRepository": {
+      "required": [
+        "id",
+        "name",
+        "type",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/VariantRepositoryLinks"
+        }
+      }
+    },
+    "VariantRepositoryLinks": {
+      "required": [
+        "self",
+        "configuration",
+        "template"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "configuration": {
+          "$ref": "#/definitions/Href"
+        },
+        "template": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "VariantRepositoryStatus": {
+      "required": [
+        "current",
+        "timestamp"
+      ],
+      "properties": {
+        "current": {
+          "type": "string",
+          "enum": [
+            "AVAILABLE"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "VariantFilesEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VariantFile"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "VariantFile": {
+      "required": [
+        "id",
+        "size",
+        "original_filename",
+        "hashes",
+        "created",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "original_filename": {
+          "type": "string"
+        },
+        "hashes": {
+          "$ref": "#/definitions/Hashes"
+        },
+        "links": {
+          "$ref": "#/definitions/VariantFileLinks"
+        }
+      }
+    },
+    "Hashes": {
+      "required": [
+        "hash",
+        "hash_algorithm"
+      ],
+      "properties": {
+        "hash": {
+          "type": "string"
+        },
+        "hash_algorithm": {
+          "type": "string"
+        }
+      }
+    },
+    "VariantFileLinks": {
+      "required": [
+        "self"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "JobsEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetJob"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetJob": {
+      "required": [
+        "id",
+        "type",
+        "status",
+        "priority",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "INGEST",
+            "EXPORT",
+            "REPLICATE",
+            "TRANSFORMATION"
+          ]
+        },
+        "status": {
+          "$ref": "#/definitions/CurrentJobStatus"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64",
+          "default": 4
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/JobLinks"
+        }
+      }
+    },
+    "CurrentJobStatus": {
+      "required": [
+        "current",
+        "timestamp"
+      ],
+      "properties": {
+        "current": {
+          "type": "string",
+          "enum": [
+            "UNSUBMITTED",
+            "QUEUED",
+            "EXECUTING",
+            "COMPLETED",
+            "FAILED",
+            "CANCELED"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "JobLinks": {
+      "required": [
+        "self",
+        "status",
+        "configuration"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "status": {
+          "$ref": "#/definitions/Href"
+        },
+        "configuration": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostJob": {
+      "required": [
+        "type",
+        "configuration"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "INGEST",
+            "EXPORT",
+            "REPLICATE",
+            "TRANSFORMATION"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "UNSUBMITTED",
+            "QUEUED"
+          ]
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64",
+          "default": 4
+        },
+        "configuration": {
+          "$ref": "#/definitions/JobConfiguration"
+        }
+      }
+    },
+    "JobConfiguration": {},
+    "MessagesEnvelope": {
+      "required": [
+        "total_count",
+        "data"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "per_page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total_pages": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "total_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        },
+        "links": {
+          "$ref": "#/definitions/PaginationLinks"
+        }
+      }
+    },
+    "Message": {
+      "required": [
+        "id",
+        "message",
+        "timestamp",
+        "error"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "error": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RepositoriesEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetRepository"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetRepository": {
+      "required": [
+        "id",
+        "name",
+        "type",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/RepositoryLinks"
+        }
+      }
+    },
+    "RepositoryLinks": {
+      "required": [
+        "self",
+        "configuration",
+        "template"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "configuration": {
+          "$ref": "#/definitions/Href"
+        },
+        "template": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostRepository": {
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "RepositoryConfiguration": {
+      "required": [
+        "propertyName"
+      ],
+      "properties": {
+        "propertyName": {
+          "type": "string"
+        }
+      }
+    },
+    "LocationsEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetLocation"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetLocation": {
+      "required": [
+        "id",
+        "name",
+        "type",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/LocationLinks"
+        }
+      }
+    },
+    "LocationLinks": {
+      "required": [
+        "self",
+        "configuration",
+        "template"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "configuration": {
+          "$ref": "#/definitions/Href"
+        },
+        "template": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostLocation": {
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "LocationConfiguration": {
+      "required": [
+        "propertyName"
+      ],
+      "properties": {
+        "propertyName": {
+          "type": "string"
+        }
+      }
+    },
+    "WorkersEnvelope": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Envelope"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetWorker"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GetWorker": {
+      "required": [
+        "id",
+        "status",
+        "created",
+        "created_by",
+        "last_modified",
+        "last_modified_by",
+        "links"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/CurrentWorkerStatus"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_by": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/WorkerLinks"
+        }
+      }
+    },
+    "CurrentWorkerStatus": {
+      "required": [
+        "current",
+        "timestamp"
+      ],
+      "properties": {
+        "current": {
+          "type": "string",
+          "enum": [
+            "ACTIVE"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "WorkerLinks": {
+      "required": [
+        "self",
+        "messages",
+        "status",
+        "tasks"
+      ],
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/Href"
+        },
+        "messages": {
+          "$ref": "#/definitions/Href"
+        },
+        "status": {
+          "$ref": "#/definitions/Href"
+        },
+        "tasks": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "PostWorker": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Status": {
+      "required": [
+        "current",
+        "timestamp",
+        "links"
+      ],
+      "properties": {
+        "current": {
+          "type": "string",
+          "enum": [
+            "QUEUED",
+            "EXECUTING",
+            "COMPLETED",
+            "FAILED",
+            "CANCELED"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "links": {
+          "$ref": "#/definitions/StatusLinks"
+        }
+      }
+    },
+    "StatusLinks": {
+      "required": [
+        "job"
+      ],
+      "properties": {
+        "job": {
+          "$ref": "#/definitions/Href"
+        }
+      }
+    },
+    "Version": {
+      "required": [
+        "version",
+        "buildTag",
+        "buildTime"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "buildTag": {
+          "type": "string"
+        },
+        "buildTime": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

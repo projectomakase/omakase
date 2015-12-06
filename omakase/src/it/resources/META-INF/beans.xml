@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+       bean-discovery-mode="all">
+    <alternatives>
+        <class>org.projectomakase.omakase.producers.MockGlacierClientProducer</class>
+        <class>org.projectomakase.omakase.producers.MockS3ClientProducer</class>
+    </alternatives>
+</beans>

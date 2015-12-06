@@ -1,0 +1,203 @@
+Omakase
+Copyright 2015 Project Omakase LLC
+
+This product includes software developed at Project Omakase LLC (http://projectomakase.org/).
+
+  ActiveMQ :: Broker under The Apache Software License, Version 2.0
+  ActiveMQ :: Camel under The Apache Software License, Version 2.0
+  ActiveMQ :: Client under The Apache Software License, Version 2.0
+  ActiveMQ :: Generic JMS Pool under The Apache Software License, Version 2.0
+  ActiveMQ :: Openwire Legacy Support under The Apache Software License, Version 2.0
+  ActiveMQ :: Pool under The Apache Software License, Version 2.0
+  ActiveMQ :: Spring under The Apache Software License, Version 2.0
+  Aether API under Eclipse Public License, Version 1.0
+  Aether Connector Basic under Eclipse Public License, Version 1.0
+  Aether Implementation under Eclipse Public License, Version 1.0
+  Aether SPI under Eclipse Public License, Version 1.0
+  Aether Transport Wagon under Eclipse Public License, Version 1.0
+  Aether Utilities under Eclipse Public License, Version 1.0
+  AOP alliance under Public Domain
+  Apache Commons Codec under The Apache Software License, Version 2.0
+  Apache Commons Lang under The Apache Software License, Version 2.0
+  Apache DeltaSpike CDI ContainerControl API under The Apache Software License, Version 2.0
+  Apache DeltaSpike CDI Weld-ContainerControl under The Apache Software License, Version 2.0
+  Apache DeltaSpike Core-API under The Apache Software License, Version 2.0
+  Apache DeltaSpike Core-Implementation under The Apache Software License, Version 2.0
+  Apache DeltaSpike Test-Control-Module API under The Apache Software License, Version 2.0
+  Apache DeltaSpike Test-Control-Module Impl under The Apache Software License, Version 2.0
+  Apache Ftplet API under Apache 2.0 License
+  Apache FtpServer Core under Apache 2.0 License
+  Apache HttpClient under Apache License
+  Apache HttpClient Mime under Apache License, Version 2.0
+  Apache HttpCore under Apache License, Version 2.0
+  Apache Log4j under The Apache Software License, Version 2.0
+  Apache Maven Wagon :: API under The Apache Software License, Version 2.0
+  Apache Maven Wagon :: Providers :: File Provider under The Apache Software License, Version 2.0
+  Apache Maven Wagon :: Providers :: HTTP Shared Library under The Apache Software License, Version 2.0
+  Apache Maven Wagon :: Providers :: Lightweight HTTP Provider under The Apache Software License, Version 2.0
+  Apache MINA Core under Apache 2.0 License
+  Apache Mina SSHD :: Core under Apache 2.0 License
+  Apache Tika core under The Apache Software License, Version 2.0
+  Apache XBean :: Spring under The Apache Software License, Version 2.0
+  Arquillian Config API under Apache License, Version 2.0
+  Arquillian Config Implementation Base under Apache License, Version 2.0
+  Arquillian Container Implementation Base under Apache License, Version 2.0
+  Arquillian Container SPI under Apache License, Version 2.0
+  Arquillian Container Test API under Apache License, Version 2.0
+  Arquillian Container Test Implementation Base under Apache License, Version 2.0
+  Arquillian Container Test SPI under Apache License, Version 2.0
+  Arquillian Core under Apache License, Version 2.0
+  Arquillian Core API under Apache License, Version 2.0
+  Arquillian Core Implementation Base under Apache License, Version 2.0
+  Arquillian Core SPI under Apache License, Version 2.0
+  Arquillian JUnit under Apache License, Version 2.0
+  Arquillian Test API under Apache License, Version 2.0
+  Arquillian Test Implementation Base under Apache License, Version 2.0
+  Arquillian Test SPI under Apache License, Version 2.0
+  Arquillian TestRunner JUnit Container under Apache License, Version 2.0
+  Arquillian TestRunner JUnit Core under Apache License, Version 2.0
+  AssertJ fluent assertions under Apache License, Version 2.0
+  Awaitility under Apache 2.0
+  AWS Java SDK for Amazon Glacier under Apache License, Version 2.0
+  AWS Java SDK for Amazon S3 under Apache License, Version 2.0
+  AWS Java SDK for Amazon SNS under Apache License, Version 2.0
+  AWS Java SDK for Amazon SQS under Apache License, Version 2.0
+  AWS Java SDK for AWS KMS under Apache License, Version 2.0
+  AWS SDK for Java - Core under Apache License, Version 2.0
+  Bean Validation API under The Apache Software License, Version 2.0
+  Camel :: AWS under The Apache Software License, Version 2.0
+  Camel :: CDI under The Apache Software License, Version 2.0
+  Camel :: Core under The Apache Software License, Version 2.0
+  Camel :: JMS under The Apache Software License, Version 2.0
+  Camel :: Spring under The Apache Software License, Version 2.0
+  CDI APIs under Apache License, Version 2.0
+  classfilewriter under Apache License, version 2.0
+  Code Generation Library under ASF 2.0
+  Common Annotations 1.2 API under CDDL or GPLv2 with exceptions
+  Commons Codec under The Apache Software License, Version 2.0
+  Commons IO under The Apache Software License, Version 2.0
+  Commons Lang under The Apache Software License, Version 2.0
+  Commons Logging under The Apache Software License, Version 2.0
+  Commons Net under The Apache Software License, Version 2.0
+  Commons Pool under The Apache Software License, Version 2.0
+  Concurrency Utilities for JavaEE under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Content Repository for JavaTM Technology API under Day Specification License or Day Specification License addendum
+  Enterprise JavaBeans(TM) 3.2 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Expression Language 3.0 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  FindBugs-Annotations under GNU Lesser Public License
+  FindBugs-jsr305 under The Apache Software License, Version 2.0
+  Groovy under The Apache Software License, Version 2.0
+  Guava: Google Core Libraries for Java under The Apache Software License, Version 2.0
+  Hamcrest Core under New BSD License
+  Hamcrest library under New BSD License
+  hawtbuf under The Apache Software License, Version 2.0
+  HLS Manifest Parser Java Library under The Apache Software License, Version 2.0
+  Infinispan Commons under Apache License
+  Infinispan Core under Apache License
+  J2EE Management 1.1 under The Apache Software License, Version 2.0
+  JACC 1.5 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Jackson-annotations under The Apache Software License, Version 2.0
+  Jackson-core under The Apache Software License, Version 2.0
+  jackson-databind under The Apache Software License, Version 2.0
+  Jackson-datatype-Guava under The Apache Software License, Version 2.0
+  Jackson-JAXRS-base under The Apache Software License, Version 2.0
+  Jackson-JAXRS-JSON under The Apache Software License, Version 2.0
+  Jackson-module-JAXB-annotations under The Apache Software License, Version 2.0
+  Java Servlet 3.1 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Java Transaction API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Java(TM) API for JSON Processing under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Java(TM) EE Interceptors 1.2 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  Java(TM) Message Service (JMS) 2.0 API under Common Development and Distribution License or GNU General Public License, Version 2 with the Classpath Exception
+  JavaBeans(TM) Activation Framework under COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
+  JavaMail API (compat) under CDDL or GPLv2+CE
+  Javassist under MPL 1.1 or LGPL 2.1 or Apache License 2.0
+  javax.inject under The Apache Software License, Version 2.0
+  javax.interceptor API under CDDL + GPLv2 with classpath exception
+  JAX-RS Core API under Apache License, Version 2.0
+  JBoss Log Manager under Public Domain
+  JBoss Logging 3 under Apache License, version 2.0
+  JBoss Marshalling OSGi Bundle under Public Domain
+  JCROM under The Apache Software License, Version 2.0
+  Jetty Server under Apache Software License - Version 2.0 or Eclipse Public License - Version 1.0
+  Jetty Utilities under Apache Software License - Version 2.0 or Eclipse Public License - Version 1.0
+  JGroups under Apache License 2.0
+  JMS 1.1 under The Apache Software License, Version 2.0
+  Joda-Time under Apache 2
+  JOpt Simple under The MIT License
+  JSch under Revised BSD
+  JSON (JavaScript Object Notation) under provided without support or warranty
+  JSON Small and Fast Parser under The Apache Software License, Version 2.0
+  json-patch under Lesser General Public License, version 3 or greater or Apache Software License, version 2.0
+  json-path under Apache 2.0
+  JSONassert under The Apache Software License, Version 2.0
+  jsoup under The MIT License
+  JSR 353 (JSON Processing) Default Provider under Dual license consisting of the CDDL v1.1 and GPL v2
+  JTA under The Apache Software License, Version 2.0
+  JUnit under Common Public License Version 1.0
+  mapdb under The Apache Software License, Version 2.0
+  Maven Aether Provider under Apache License, Version 2.0
+  Maven Model under Apache License, Version 2.0
+  Maven Model Builder under Apache License, Version 2.0
+  Maven Repository Metadata Model under Apache License, Version 2.0
+  Maven Settings under Apache License, Version 2.0
+  Maven Settings Builder under Apache License, Version 2.0
+  Mockito under The MIT License
+  ModelMapper under Apache License, Version 2.0
+  ModeShape Common under Apache Software License 2.0
+  ModeShape JCR Repository under Apache Software License 2.0
+  ModeShape Repository API under Apache Software License 2.0
+  null under Lesser General Public License, version 3 or greater or Apache Software License, version 2.0
+  Objenesis under Apache 2
+  Old JAXB Core under CDDL+GPL License
+  Old JAXB Runtime under CDDL+GPL License
+  org.eclipse.sisu.inject under Eclipse Public License, Version 1.0
+  org.eclipse.sisu.plexus under Eclipse Public License, Version 1.0
+  PicketBox - Assembly under lgpl
+  Plexus :: Component Annotations under The Apache Software License, Version 2.0
+  Plexus Cipher: encryption/decryption Component under Apache Public License 2.0
+  Plexus Common Utilities under The Apache Software License, Version 2.0
+  Plexus Compiler Api under The Apache Software License, Version 2.0
+  Plexus Interpolation API under The Apache Software License, Version 2.0
+  Plexus Javac Component under The Apache Software License, Version 2.0
+  Plexus Security Dispatcher Component under Apache Public License 2.0
+  Reflections under WTFPL or The New BSD License
+  REST Assured under Apache 2.0
+  rest-assured-common under Apache 2.0
+  RESTEasy JAX-RS Client under Apache License, Version 2.0
+  RESTEasy JAX-RS Implementation under Apache License, Version 2.0
+  Schematic API under Apache Software License 2.0
+  Servlet Specification API under Apache License Version 2.0
+  ShrinkWrap API under Apache License, Version 2.0
+  ShrinkWrap Descriptors API Base under Apache License, Version 2.0
+  ShrinkWrap Descriptors SPI under Apache License, Version 2.0
+  ShrinkWrap Implementation Base under Apache License, Version 2.0
+  ShrinkWrap Resolver API under Apache License, Version 2.0
+  ShrinkWrap Resolver Dependency Chain under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven API under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven Archive API under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven Archive Implementation under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven Archive SPI under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven Implementation under Apache License, Version 2.0
+  ShrinkWrap Resolver Maven SPI under Apache License, Version 2.0
+  ShrinkWrap Resolver SPI under Apache License, Version 2.0
+  ShrinkWrap SPI under Apache License, Version 2.0
+  SLF4J API Module under MIT License
+  SLF4J LOG4J-12 Binding under MIT License
+  SLF4J: JBoss Log Manager under Public Domain
+  Spring AOP under The Apache Software License, Version 2.0
+  Spring Beans under The Apache Software License, Version 2.0
+  Spring Context under The Apache Software License, Version 2.0
+  Spring Core under The Apache Software License, Version 2.0
+  Spring Expression Language (SpEL) under The Apache Software License, Version 2.0
+  Spring JMS under The Apache Software License, Version 2.0
+  Spring Messaging under The Apache Software License, Version 2.0
+  Spring Transaction under The Apache Software License, Version 2.0
+  TagSoup under Apache License 2.0
+  Weld APIs under Apache License, Version 2.0
+  Weld Implementation (Core) under Apache License, Version 2.0
+  Weld SE (Core) under Apache License, Version 2.0
+  Weld SPIs for container integration under Apache License, Version 2.0
+  WireMock under The Apache Software License, Version 2.0
+  xml-path under Apache 2.0
+  XMLUnit for Java under BSD License
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:infinispan:config:7.0 http://www.infinispan.org/schemas/infinispan-config-7.0.xsd
+            urn:infinispan:config:store:jdbc:7.0 http://docs.jboss.org/infinispan/schemas/infinispan-cachestore-jdbc-config-7.0.xsd"
+            xmlns="urn:infinispan:config:7.0">
+    <jgroups>
+        <stack-file name="tcp" path="${jboss.server.config.dir}/modeshape/jgroups-ec2-config.xml"/>
+    </jgroups>
+    <cache-container default-cache="omakase-repo" statistics="false">
+        <transport cluster="modeshape-cluster" stack="tcp"/>
+        <jmx duplicate-domains="true"/>
+        <replicated-cache name="omakase-repo" mode="SYNC">
+            <locking striping="false" isolation="READ_COMMITTED"/>
+            <transaction mode="NON_DURABLE_XA" locking="PESSIMISTIC"/>
+            <eviction max-entries="10000" strategy="LIRS"/>
+            <expiration interval="-1"/>
+            <persistence passivation="false">
+                <string-keyed-jdbc-store xmlns="urn:infinispan:config:store:jdbc:7.0" fetch-state="false" read-only="false" purge="false" shared="true">
+                    <data-source jndi-url="java:jboss/datasources/OmakaseDS"/>
+                    <string-keyed-table
+                            prefix="modeshape"
+                            create-on-start="true"
+                            drop-on-exit="false">
+                        <id-column name="id" type="VARCHAR(200)"/>
+                        <data-column name="datum" type="LONGBLOB"/>
+                        <timestamp-column name="version" type="BIGINT"/>
+                    </string-keyed-table>
+                </string-keyed-jdbc-store>
+            </persistence>
+        </replicated-cache>
+    </cache-container>
+</infinispan>
