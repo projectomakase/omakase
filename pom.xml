@@ -46,7 +46,7 @@
         <guava.version>18.0</guava.version>
         <hlsparserj.version>1.0.0</hlsparserj.version>
         <httpclient.version>4.2.6</httpclient.version>
-        <infinispan.version>7.2.3.Final</infinispan.version>
+        <infinispan.version>10.0.0.Final</infinispan.version>
         <jackson.version>2.4.1</jackson.version>
         <jackson-datatype-guava.version>2.4.0</jackson-datatype-guava.version>
         <javax.json.version>1.0.3</javax.json.version>
