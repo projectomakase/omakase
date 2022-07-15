@@ -39,7 +39,7 @@
 
         <!-- dependency versions -->
         <activemq-camel.version>5.11.1</activemq-camel.version>
-        <aws-java-sdk.version>1.9.26</aws-java-sdk.version>
+        <aws-java-sdk.version>1.12.261</aws-java-sdk.version>
         <camel.version>2.15.0</camel.version>
         <commons-net.version>3.3</commons-net.version>
         <deltaspike.version>1.2.1</deltaspike.version>
